@@ -1,21 +1,8 @@
 import { useState } from 'react';
 
 import axios from 'axios';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-
-import { login } from '../Redux/actions';
 
 export const Login = () => {
-   const dispatch = useDispatch();
-   const navigate = useNavigate();
-   useSelector((store) => {
-      // console.log(store);
-      return store.username;
-   });
    const [loginData, setloginData] = useState({
       username: "",
       password: "",
@@ -28,23 +15,14 @@ export const Login = () => {
    const handleSubmit = (e) => {
       e.preventDefault();
       axios.get("http://localhost:8080/users").then((data) => {
-         //  console.log(data.data);
          data.data.map((e) => {
-            // console.log(e)
             if (
                e.username === loginData.username &&
                e.pass === loginData.password
             ) {
-               dispatch(login(e));
-               if(e.role === 'admin'){
-
-                 navigate("/orders")
-               } else{
-                 navigate("/neworder")
-               }
+               console.log(e);
             }
          });
-         // console.log(data.data)
       });
    };
 
